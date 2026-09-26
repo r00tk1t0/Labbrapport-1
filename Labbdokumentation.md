@@ -27,27 +27,29 @@ vi börjar med att sätta på två virtuella maskiner i **VirtualBox** som ska p
  |CPU kärnor  |   ram |     OS |
 |-------------|---------------|----------------------------------|
 | _4_      |       8GB   |`Windows server 2025`      |_Windows_|
-| _2_       |    8GB    |     `Ubuntu-26-04. LTS`      |_Ubuntu_|
+| _2_       |      8GB    |     `Ubuntu-26-04. LTS`      |_Ubuntu_|
   
   
 
 
 | Hostname  |            |   OS              |         IP adress|  subnätmask     |     Standard Gateway 
 |--------------------|-----------------------|--------------------|----------------|---- |--------|
-| **Windowslabbserv**  ||  Windows Server 2025 | `192.168.1.50`  |``255.255.255.0``|-
+| **Windowslabbserv**  |  Windows Server 2025 | `192.168.1.50`  |``255.255.255.0``|-
 | **labbmiljo** |      |    Ubuntu 26.04 LTS   |  `192.168.1.51`   | `255.255.255.0`| -
 
 - Innan installationen bör man ändra till _internal network_ eller _Host-only_ vilket görs enkelt genom VirtualBox, _inställningar_ > _Nätverk_
 
-![alt fdtext](image.png)
+![alt text](</bilder/VM adapters.png>)
+
 
 - Under installationen av `Ubuntu 26,04 LTS` så kunde man redan konfigurera statiska IP-adresser genom att välja nätverkskortet `enp0s3`, ändra från `DHCP` till manuellt och sedan fylla i följande IP-adresserna och subnät.
 ---
 
 För `Windows Server 2025` i `Sconfig` väljer man 8) __"Network Settings
 
+![alt text](/bilder/Sconfig.png)
+
 Nedan så ser den förvalda IP_adressen, den ändras via Network adapter och man ska välja *statisk*.
-![alt text](image-1.png)
 
 
 ```
@@ -64,3 +66,28 @@ Adressen kunde inte verkställas manuellt vi Sconfig, problemet var att den inte
 New-NetIPAddress -Interface 6 -IPAddress "192.168.1.50" -PrefixLenght 24
 ```
 Därefter bled det lyckad och jag kunde bekräfta genom ```ipconfig```
+
+
+## Kommandoradsarbete & Felsökning (Kursmål 9)
+
+I detta avsnitt demonsteras hur man hanterar kommandoren i Linux (bash) och Windows (PowerShell), mapp och filhantering, konfiguration av användarbehörigheter,, verifering av nätverk och slutligen felsökning.
+
+### Ubuntu
+
+Vid skapandet av mappkatalogen:
+
+Först kollar vi vart vi befinner oss:
+
+
+![ss](/bilder/pwd.png)
+
+
+- Vi skapar mappstrukturen med `sudo mkdir -p /var/systementor/konsultdata`
+
+- `touch /var/systementor/konsultdata/anteckningar.txt` skapar en texfil inuti katalogen
+
+![ee](/bilder/mkdir.png)
+
+för att bekräfta så flyttar vi till sökvägen med `cd` och listar textdokumentet med `ls`
+
+![](/bilder/touch.png)
