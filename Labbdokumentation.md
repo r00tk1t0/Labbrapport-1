@@ -24,18 +24,18 @@ vi börjar med att sätta på två virtuella maskiner i **VirtualBox** som ska p
 
 
 
- |CPU kärnor  |   ram |     OS |
+ |CPU kärnor  |      ram           |            OS                 |
 |-------------|---------------|----------------------------------|
-| _4_      |       8GB   |`Windows server 2025`      |_Windows_|
-| _2_       |      8GB    |     `Ubuntu-26-04. LTS`      |_Ubuntu_|
+|    _4_       |       8GB   |`Windows server 2025`      |_Windows_|
+|    _2_       |      8GB    |     `Ubuntu-26.04. LTS`      |_Ubuntu_|
   
   
 
 
-| Hostname  |            |   OS              |         IP adress|  subnätmask     |     Standard Gateway 
-|--------------------|-----------------------|--------------------|----------------|---- |--------|
-| **Windowslabbserv**  |  Windows Server 2025 | `192.168.1.50`  |``255.255.255.0``|-
-| **labbmiljo** |      |    Ubuntu 26.04 LTS   |  `192.168.1.51`   | `255.255.255.0`| -
+| Hostname              |               OS              |           IP address       |  Subnätmask         | Default gateway                       
+|-----------------------|------------------------------ |-----------------------|-------------------|-----------------|
+| **Windowslabbserv**   |     _Windows Server 2025_     | `192.168.1.50`         |``255.255.255.0``  | -
+| **labbmiljo**         |    _Ubuntu 26.04 LTS_         |  `192.168.1.51`        | ``255.255.255.0`` |-
 
 - Innan installationen bör man ändra till _internal network_ eller _Host-only_ vilket görs enkelt genom VirtualBox, _inställningar_ > _Nätverk_
 
@@ -72,7 +72,7 @@ Därefter bled det lyckad och jag kunde bekräfta genom ```ipconfig```
 
 I detta avsnitt demonsteras hur man hanterar kommandoren i Linux (bash) och Windows (PowerShell), mapp och filhantering, konfiguration av användarbehörigheter,, verifering av nätverk och slutligen felsökning.
 
-### Ubuntu
+### Ubuntu - Mapp & användargrupp
 
 Vid skapandet av mappkatalogen:
 
@@ -84,10 +84,45 @@ Först kollar vi vart vi befinner oss:
 
 - Vi skapar mappstrukturen med `sudo mkdir -p /var/systementor/konsultdata`
 
-- `touch /var/systementor/konsultdata/anteckningar.txt` skapar en texfil inuti katalogen
+- `touch /var/systementor/konsultdata/anteckningar.txt` skapar en fil inuti katalogen
 
-![ee](/bilder/mkdir.png)
+![bild](/bilder/mkdir.png)
 
-för att bekräfta så flyttar vi till sökvägen med `cd` och listar textdokumentet med `ls`
+för att bekräfta så flyttar vi till sökvägen med `cd` och listar filen med `ls`
 
-![](/bilder/touch.png)
+![bild](/bilder/touch.png)
+
+- Sen skapar vi användargruppen **konsulter** & tilldelar `sudo groupadd konsulter`
+
+- `sudo chown :konsulter /var/systementor/konsultdata` 
+
+![bild](/bilder/sudo%20chmod.png)
+
+
+ kommandot ``ls -la`` för att inspektera behörigheterna
+- behörigheter har tilldelats
+![bild](/bilder/permissions.png)
+
+
+För att verifera att anslutnigen mellan maskinerna behöver vi pinga till dens IP address, i detta fall **Windows server**
+
+```
+ping 192.168.1.50
+
+```
+
+![bild](/bilder/ping.png)
+
+- [ x ] Lyckad resultat!
+
+
+
+### <u>Detaljer om nätverksortet<u>
+
+```
+ip addr show
+```
+
+
+![bild](/bilder/ip%20addr%20show.png)
+
