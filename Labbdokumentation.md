@@ -24,9 +24,9 @@ vi börjar med att sätta på två virtuella maskiner i **VirtualBox** som ska p
 
 
 
- |CPU kärnor  |      ram           |            OS                 |
+ |CPU kärnor  |      ram           |            OS               |
 |-------------|---------------|----------------------------------|
-|    _4_       |       8GB   |`Windows server 2025`      |_Windows_|
+|    _4_       |      8GB   |`Windows server 2025`      |_Windows_|
 |    _2_       |      8GB    |     `Ubuntu-26.04. LTS`      |_Ubuntu_|
   
   
@@ -68,11 +68,11 @@ New-NetIPAddress -Interface 6 -IPAddress "192.168.1.50" -PrefixLenght 24
 Därefter bled det lyckad och jag kunde bekräfta genom ```ipconfig```
 
 
-## Kommandoradsarbete & Felsökning (Kursmål 9)
+# Kommandoradsarbete & Felsökning (Kursmål 9)
 
 I detta avsnitt demonsteras hur man hanterar kommandoren i Linux (bash) och Windows (PowerShell), mapp och filhantering, konfiguration av användarbehörigheter,, verifering av nätverk och slutligen felsökning.
 
-### Ubuntu - Mapp & användargrupp
+## **Ubuntu (Bash)**
 
 Vid skapandet av mappkatalogen:
 
@@ -117,12 +117,47 @@ ping 192.168.1.50
 
 
 
-### <u>Detaljer om nätverksortet<u>
+### Detaljer om nätverksortet
 
-```
+``` Bash
 ip addr show
+
 ```
 
 
 ![bild](/bilder/ip%20addr%20show.png)
+
+## **Windows(PowerShell)**
+
+Det gäller sammma princip här att skapa mappen ``C:\Systementor\KonsultData`` via PowerShell, samma kommando gäller öven här 
+
+![dd](/bilder/mkdir%20Win.png)
+
+
+
+kommmandot visar behörighetsstruktren och vi kan konstatera att vi har full kontrol
+
+``` PowerShell
+Get-Acl 
+
+```
+
+![](/bilder/getAcl.png)
+
+
+Nu ska vi verifera anslutingen **TILL** _Ubuntu Servern_ med 
+
+```PowerShell
+ping 192.168.1.51
+```
+
+![ff](/bilder/pingUbun.png)
+
+
+Anslutningen lyckades!
+
+
+### Nätverksinställningarna:
+
+![ss](/bilder/IPconfWin.png)
 
