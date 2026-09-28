@@ -2,9 +2,9 @@
 
   
 
-###  **Namn:** _Murad Abdullah_
-###  **Kurs:** _IT Infrastructur secure cloud (ISCX26)_
-### **Datum:** _2026-09-20_
+###  **Namn:** _Murad Abdullah_ (ICS26)
+###  **Kurs:** _Introduktion till yrkesrollen och grunderna i IT-infrastruktur_
+### **Datum:** _2026-09-28
 ### **Kursmål:** _8,9,10 & 11._
 
   
@@ -26,16 +26,20 @@ vi börjar med att sätta på två virtuella maskiner i **VirtualBox** som ska p
 
  |CPU kärnor  |      ram           |            OS               |
 |-------------|---------------|----------------------------------|
-|    _4_       |      8GB   |`Windows server 2025`      |_Windows_|
-|    _2_       |      8GB    |     `Ubuntu-26.04. LTS`      |_Ubuntu_|
+|    _4_       |    8GB     |`Windows server 2025`      |_Windows_|
+|    _2_       |    8GB     | `Ubuntu-26.04. LTS`      |_Ubuntu_|
+  
   
   
 
 
-| Hostname              |               OS              |           IP address       |  Subnätmask         | Default gateway                       
+| Hostname              |               OS              |           IP address       |  Subnätmask         | Standard Gateway               
 |-----------------------|------------------------------ |-----------------------|-------------------|-----------------|
 | **Windowslabbserv**   |     _Windows Server 2025_     | `192.168.1.50`         |``255.255.255.0``  | -
-| **labbmiljo**         |    _Ubuntu 26.04 LTS_         |  `192.168.1.51`        | ``255.255.255.0`` |-
+| **labbmijo**         |    _Ubuntu 26.04 LTS_         |  `192.168.1.51`        | ``255.255.255.0`` |-
+
+(_Själva standard gateway är inte konfigurerad då det inte behövs eftersom båda maskinerna ligger på samma nätverk_)
+
 
 - Innan installationen bör man ändra till _internal network_ eller _Host-only_ vilket görs enkelt genom VirtualBox, _inställningar_ > _Nätverk_
 
@@ -62,8 +66,8 @@ Nedan så ser den förvalda IP_adressen, den ändras via Network adapter och man
 
 Adressen kunde inte verkställas manuellt vi Sconfig, problemet var att den inte lyckades uppdatera den nya adressen. lösningen var att genomföra konfigurationen manuellt via `PowerShell`
 
-```PowerShell
-New-NetIPAddress -Interface 6 -IPAddress "192.168.1.50" -PrefixLenght 24
+``` PowerShell
+New-NetIPAddress -InterfaceIndex 6 -IPAddress "192.168.1.50" -PrefixLength 24
 ```
 Därefter bled det lyckad och jag kunde bekräfta genom ```ipconfig```
 
@@ -92,9 +96,17 @@ för att bekräfta så flyttar vi till sökvägen med `cd` och listar filen med 
 
 ![bild](/bilder/touch.png)
 
-- Sen skapar vi användargruppen **konsulter** & tilldelar `sudo groupadd konsulter`
+- Sen skapar vi användargruppen **konsulter** med `sudo groupadd konsulter`
 
 - `sudo chown :konsulter /var/systementor/konsultdata` 
+- `sudo chown :konsulter /var/systementor/konsultdata/anteckningar.txt`
+
+ tilldelar behörigheterna 
+
+
+- `sudo chmod 750 /var/systementor/konsultdata` 
+- `sudo chmod 640 /var/systementor/konsultdata/anteckningar.txt`
+
 
 ![bild](/bilder/sudo%20chmod.png)
 
@@ -160,4 +172,37 @@ Anslutningen lyckades!
 ### Nätverksinställningarna:
 
 ![ss](/bilder/IPconfWin.png)
+
+# Git & Versionshantering (Kursmål 10):
+
+##  Länk till min Git-repository:
+
+  ### [Labbmiljö, Git, CLI & AI](https://github.com/r00tk1t0/Labbrapport-1.git)
+
+_Git commit historik:_
+
+
+# AI-logg & Reflektion (Kursmål 11) 
+
+
+
+
+![Geminis svar](/bilder/GeminiSvar.png)
+### AI-verktyg som användes: **Gemini**
+
+### Prompt: "hur konfigurerar jag statisk IP-adress för Windows Server"
+
+### Kritisk granskning av AI: 
+
+Svaret jag fick var mestadels korrekt men i början så nämner den inte ``Sconfig`` vilket är ett kommandoradserktyg där man ändrar Te.x nätverksinställningar eller ändrar namn på host, men den antog att jag använde GUI (grafisk gränssnitt).
+Den föreslog även upsättning av DNS (8.8.8.8) vilket är irrelevant för denna miljö, även för standard gateway `192.168.1.1` vilket det inte behövs heller.
+
+En liten sak jag märkte dock på kommandot `New-NetIPAddress -InterfaceAlias`, AI använde sig utav parametern ``"InterfaceAlias "Ethernet"``, medan jag använde "`New-NetIPAddress -InterfaceIndex 6`, skillnaden är att jag fick använda dens ID  istället för en nätverkskortets namn (**"Ethernet"**). Utöver svaret från Gemini så fanns det inga hallucinationer eller säkerhetsbrister.
+
+Jag verfierade svaret genom att köra kommandot i virtuella windows servern och bekräftade genom `/ipconfig`. 
+
+
+
+
+
 
