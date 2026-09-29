@@ -192,9 +192,11 @@ Anslutningen lyckades!
 
 ### Länk till min Git-repository:
 
-  ### [Labbmiljö, Git, CLI & AI](https://github.com/r00tk1t0/Labbrapport-1.git)
+  ### [Labbrapport: labbmiljö, Git, CLI & AI](https://github.com/r00tk1t0/Labbrapport-1.git)
 
-> _Git commit historik:_ ![GitLog](/bilder/Gitlog.png)
+>_Git commit historik:_ 
+>>
+>![GitLog](/bilder/gitlogNy.png/)
 
 
 # AI-logg & Reflektion (Kursmål 11) 
