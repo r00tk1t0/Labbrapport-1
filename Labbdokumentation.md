@@ -1,11 +1,11 @@
-# Labbmiljö, Git, CLI och AI
+# Labbrapport:  labbmiljö, Git, CLI och AI
 
   
 
 ###  **Namn:** _Murad Abdullah_ (ICS26)
 ###  **Kurs:** _Introduktion till yrkesrollen och grunderna i IT-infrastruktur_
-### **Datum:** _2026-09-28
-### **Kursmål:** _8,9,10 & 11._
+### **Datum:** _2026-09-29_
+### **Kursmål:** _8,9,10 & 11_
 
   
 
@@ -26,8 +26,8 @@ vi börjar med att sätta på två virtuella maskiner i **VirtualBox** som ska p
 
  |CPU kärnor  |      ram           |            OS               |
 |-------------|---------------|----------------------------------|
-|    _4_       |    8GB     |`Windows server 2025`      |_Windows_|
-|    _2_       |    8GB     | `Ubuntu-26.04. LTS`      |_Ubuntu_|
+|    _4_       |    8GB       |`Windows server 2025`      |_Windows_|
+|    _2_       |    8GB       | `Ubuntu-26.04. LTS`      |_Ubuntu_|
   
   
   
@@ -35,7 +35,7 @@ vi börjar med att sätta på två virtuella maskiner i **VirtualBox** som ska p
 
 | Hostname              |               OS              |           IP address       |  Subnätmask         | Standard Gateway               
 |-----------------------|------------------------------ |-----------------------|-------------------|-----------------|
-| **Windowslabbserv**   |     _Windows Server 2025_     | `192.168.1.50`         |``255.255.255.0``  | - [^1]
+| **Windowslabbserv**   |     _Windows Server 2025_     | `192.168.1.50`         |``255.255.255.0``  | - 
 | **labbmijo**         |    _Ubuntu 26.04 LTS_         |  `192.168.1.51`        | ``255.255.255.0`` |-
 
 (_Själva standard gateway är inte konfigurerad då det inte behövs eftersom båda maskinerna ligger på samma nätverk_)
@@ -58,7 +58,7 @@ Nedan så ser den förvalda IP_adressen, den ändras via Network adapter och man
 
 ```
 
-6 |168.254.229.209 | Ethernet | Intel (R) PRO/1000 MT Desktop Adapter
+6 |169.254.229.209 | Ethernet | Intel (R) PRO/1000 MT Desktop Adapter
 
 ```
 
@@ -88,7 +88,7 @@ Först kollar vi vart vi befinner oss:
 
 - Vi skapar mappstrukturen med `sudo mkdir -p /var/systementor/konsultdata`
 
-- `touch /var/systementor/konsultdata/anteckningar.txt` skapar en fil inuti katalogen
+- `sudo touch /var/systementor/konsultdata/anteckningar.txt` skapar en fil inuti katalogen
 
 ![mkdir](/bilder/mkdir.png)
 
@@ -116,7 +116,7 @@ för att bekräfta så flyttar vi till sökvägen med `cd` och listar filen med 
 - behörigheter har tilldelats
 
 Mappen (750) Ägaren har rätt till att läsa, skriva, öppna. Gruppen enbart läsa, öppna. De övriga ingen åtkomst.
-Filen (640) ägaren kan läsa & skriva, gruppen enbart läsa och övriga
+Filen (640) ägaren kan läsa & skriva, gruppen enbart läsa och övriga ingen åtkomst.
 
 ![permissions](/bilder/permissions.png)
 
