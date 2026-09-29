@@ -9,9 +9,9 @@
 
   
 
-##  Indroduktion
+##  Introduktion
 
-Detta är en praktisk moment där jag visar upp konfiguration av nätverk i virutal machine, hantering av filer & behörigheter via kommandoren i Windows och linux. Versionhantering i git, där commits sker löpande. Utvärdering av AI och granskning under arbetet.
+Detta är en praktisk moment där jag visar upp konfiguration av nätverk i virtual machine, hantering av filer & behörigheter via kommandoren i Windows och linux. Versionhantering i git, där commits sker löpande. Utvärdering av AI och granskning under arbetet.
 
   
   
@@ -35,7 +35,7 @@ vi börjar med att sätta på två virtuella maskiner i **VirtualBox** som ska p
 
 | Hostname              |               OS              |           IP address       |  Subnätmask         | Standard Gateway               
 |-----------------------|------------------------------ |-----------------------|-------------------|-----------------|
-| **Windowslabbserv**   |     _Windows Server 2025_     | `192.168.1.50`         |``255.255.255.0``  | -
+| **Windowslabbserv**   |     _Windows Server 2025_     | `192.168.1.50`         |``255.255.255.0``  | - [^1]
 | **labbmijo**         |    _Ubuntu 26.04 LTS_         |  `192.168.1.51`        | ``255.255.255.0`` |-
 
 (_Själva standard gateway är inte konfigurerad då det inte behövs eftersom båda maskinerna ligger på samma nätverk_)
@@ -43,7 +43,7 @@ vi börjar med att sätta på två virtuella maskiner i **VirtualBox** som ska p
 
 - Innan installationen bör man ändra till _internal network_ eller _Host-only_ vilket görs enkelt genom VirtualBox, _inställningar_ > _Nätverk_
 
-![alt text](</bilder/VM adapters.png>)
+![VM adapters](</bilder/VM adapters.png>)
 
 
 - Under installationen av `Ubuntu 26,04 LTS` så kunde man redan konfigurera statiska IP-adresser genom att välja nätverkskortet `enp0s3`, ändra från `DHCP` till manuellt och sedan fylla i följande IP-adresserna och subnät.
@@ -51,7 +51,7 @@ vi börjar med att sätta på två virtuella maskiner i **VirtualBox** som ska p
 
 För `Windows Server 2025` i `Sconfig` väljer man 8) __"Network Settings
 
-![alt text](/bilder/Sconfig.png)
+![Sconfig](/bilder/Sconfig.png)
 
 Nedan så ser den förvalda IP_adressen, den ändras via Network adapter och man ska välja *statisk*.
 
@@ -76,25 +76,25 @@ Därefter bled det lyckad och jag kunde bekräfta genom ```ipconfig```
 
 I detta avsnitt demonsteras hur man hanterar kommandoren i Linux (bash) och Windows (PowerShell), mapp och filhantering, konfiguration av användarbehörigheter,, verifering av nätverk och slutligen felsökning.
 
-## **Ubuntu (Bash)**
+ ## **Ubuntu** (Bash)
 
 Vid skapandet av mappkatalogen:
 
 Först kollar vi vart vi befinner oss:
 
 
-![ss](/bilder/pwd.png)
+![Pwd](/bilder/pwd.png)
 
 
 - Vi skapar mappstrukturen med `sudo mkdir -p /var/systementor/konsultdata`
 
 - `touch /var/systementor/konsultdata/anteckningar.txt` skapar en fil inuti katalogen
 
-![bild](/bilder/mkdir.png)
+![mkdir](/bilder/mkdir.png)
 
 för att bekräfta så flyttar vi till sökvägen med `cd` och listar filen med `ls`
 
-![bild](/bilder/touch.png)
+![touch](/bilder/touch.png)
 
 - Sen skapar vi användargruppen **konsulter** med `sudo groupadd konsulter`
 
@@ -108,12 +108,18 @@ för att bekräfta så flyttar vi till sökvägen med `cd` och listar filen med 
 - `sudo chmod 640 /var/systementor/konsultdata/anteckningar.txt`
 
 
-![bild](/bilder/sudo%20chmod.png)
+![chmod](/bilder/sudo%20chmod.png)
 
 
  kommandot ``ls -la`` för att inspektera behörigheterna
+
 - behörigheter har tilldelats
-![bild](/bilder/permissions.png)
+
+Mappen (750) Ägaren har rätt till att läsa, skriva, öppna. Gruppen enbart läsa, öppna. De övriga ingen åtkomst.
+Filen (640) ägaren kan läsa & skriva, gruppen enbart läsa och övriga
+
+![permissions](/bilder/permissions.png)
+
 
 
 För att verifera att anslutnigen mellan maskinerna behöver vi pinga till dens IP address, i detta fall **Windows server**
@@ -123,7 +129,7 @@ ping 192.168.1.50
 
 ```
 
-![bild](/bilder/ping.png)
+![ping](/bilder/ping.png)
 
 - [ x ] Lyckad resultat!
 
@@ -137,25 +143,34 @@ ip addr show
 ```
 
 
-![bild](/bilder/ip%20addr%20show.png)
+![ipaddr](/bilder/ip%20addr%20show.png)
 
-## **Windows(PowerShell)**
+## **Windows (PowerShell)**
 
 Det gäller sammma princip här att skapa mappen ``C:\Systementor\KonsultData`` via PowerShell, samma kommando gäller öven här 
 
-![dd](/bilder/mkdir%20Win.png)
+![mkdirWin](/bilder/mkdir%20Win.png)
 
 
 
-kommmandot visar behörighetsstruktren och vi kan konstatera att vi har full kontrol
+kommmandot visar behörighetsstruktren
 
 ``` PowerShell
-Get-Acl 
+Get-Acl C:\Systementor\KonsultData
 
 ```
 
-![](/bilder/getAcl.png)
+![getACL](/bilder/getAcl.png)
 
+
+Här har vi en mer detaljerad lista,
+``` PowerShell
+Get-Acl C:\Systementor\KonsultData | Format-list
+
+```
+Mappen ägs av Admin, både SYSTEM och admin har kontroll och vanliga användare kan läsa samt skapa filer, mappen har fått samma behörighet som C:
+
+![getACList](/bilder/getACLlist.png)
 
 Nu ska vi verifera anslutingen **TILL** _Ubuntu Servern_ med 
 
@@ -163,7 +178,7 @@ Nu ska vi verifera anslutingen **TILL** _Ubuntu Servern_ med
 ping 192.168.1.51
 ```
 
-![ff](/bilder/pingUbun.png)
+![PingUbun](/bilder/pingUbun.png)
 
 
 Anslutningen lyckades!
@@ -171,15 +186,15 @@ Anslutningen lyckades!
 
 ### Nätverksinställningarna:
 
-![ss](/bilder/IPconfWin.png)
+![IPconfWin](/bilder/IPconfWin.png)
 
 # Git & Versionshantering (Kursmål 10):
 
-##  Länk till min Git-repository:
+### Länk till min Git-repository:
 
   ### [Labbmiljö, Git, CLI & AI](https://github.com/r00tk1t0/Labbrapport-1.git)
 
-_Git commit historik:_
+> _Git commit historik:_ ![GitLog](/bilder/Gitlog.png)
 
 
 # AI-logg & Reflektion (Kursmål 11) 
@@ -199,7 +214,7 @@ Den föreslog även upsättning av DNS (8.8.8.8) vilket är irrelevant för denn
 
 En liten sak jag märkte dock på kommandot `New-NetIPAddress -InterfaceAlias`, AI använde sig utav parametern ``"InterfaceAlias "Ethernet"``, medan jag använde "`New-NetIPAddress -InterfaceIndex 6`, skillnaden är att jag fick använda dens ID  istället för en nätverkskortets namn (**"Ethernet"**). Utöver svaret från Gemini så fanns det inga hallucinationer eller säkerhetsbrister.
 
-Jag verfierade svaret genom att köra kommandot i virtuella windows servern och bekräftade genom `/ipconfig`. 
+Jag verfierade svaret genom att köra kommandot i virtuella Windows servern och bekräftade genom `/ipconfig all`. 
 
 
 
